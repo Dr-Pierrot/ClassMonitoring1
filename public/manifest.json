@@ -1,0 +1,17 @@
+{
+    "name": "Class Monitoring",
+    "short_name": "Class Monitoring",
+    "description": "A web app for monitoring class attendance at CCS DCT.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#6777ef",
+    "icons": [
+      {
+        "src": "assets/img/logo2.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ]
+  }
+  

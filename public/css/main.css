@@ -1,0 +1,89 @@
+body {
+    background: linear-gradient(to bottom, #f12222, #696969);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Figtree', sans-serif;
+    margin: 0;
+}
+
+.custom-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 20px;
+}
+
+.left-panel {
+    flex: 1; /* Take up remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+}
+
+.main-logo {
+    width: 500px; /* Adjust the logo size as needed */
+    margin-bottom: 20px;
+}
+
+.left-panel p {
+    color: white; /* Set the color of <p> text to white */
+}
+
+.logo-row {
+    display: flex;
+    justify-content: center; /* Centers logos horizontally */
+    align-items: center; /* Aligns logos vertically */
+    margin-top: 20px; /* Adjust margin for spacing */
+    
+}
+
+.logo-row .side-image {
+    width: 100px; /* Set a fixed width */
+    height: 100px; /* Set a fixed height */
+    object-fit: contain; /* Maintain the aspect ratio */
+    margin: 0 15px; /* Add horizontal spacing between logos */
+}
+
+
+.right-panel {
+    flex: 0 0 350px; /* Make the right panel take fixed width */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center the login card vertically */
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8); /* Slight transparency for the right panel */
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.card {
+    width: 100%; /* Make the card take the full width of the right panel */
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.card-header {
+    text-align: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .custom-container {
+        flex-direction: column; /* Stack the panels vertically on smaller screens */
+    }
+
+    .left-panel {
+        margin-bottom: 20px;
+    }
+}

@@ -1,0 +1,17 @@
+
+.responsive-logo {
+    max-width: 1000px;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .responsive-logo {
+        max-width: 100px;
+    }
+}
+
+@media (max-width: 576px) {
+    .responsive-logo {
+        max-width: 80px;
+    }
+}
