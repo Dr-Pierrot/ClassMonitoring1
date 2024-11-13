@@ -165,3 +165,13 @@ Route::post('/subjects/import', [SubjectController::class, 'import'])->name('sub
 Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects.index');
 Route::post('/subjects/import', [SubjectController::class, 'import'])->name('subjects.import');
 
+Route::post('/students/enroll', [StudentController::class, 'enroll'])->name('students.enroll');
+
+Route::get('/sections/by-year/{year}', [SectionController::class, 'getSectionsByYear']);
+
+
+Route::post('/subjects/add', [SubjectController::class, 'add'])->name('subjects.add');
+Route::post('/subjects/add-selected', [SubjectController::class, 'addSelected'])->name('subjects.addSelected');
+// Route for deleting a subject
+Route::delete('/subjects/{id}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
+

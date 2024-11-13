@@ -16,6 +16,7 @@ class SectionController extends Controller
 
         // Retrieve sections and sort them first by Year Level, then by Section description (alphabetically)
         $sections = Section::whereIn('name', $yearLevels)
+                           ->where('user_id', Auth::id())
                            ->orderByRaw("FIELD(name, '1st Year', '2nd Year', '3rd Year', '4th Year')")
                            ->orderBy('description', 'asc')
                            ->get();
@@ -178,4 +179,14 @@ class SectionController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Section deleted successfully.'], 200);
     }
+
+    public function getSectionsByYear($year)
+    {
+        // Adjust 'year_level' field according to your database structure
+        $sections = Section::where('year_level', $year)->get(['id', 'name']);
+        
+        // Return JSON response
+        return response()->json(['sections' => $sections]);
+    }
+
 }

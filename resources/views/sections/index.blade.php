@@ -64,21 +64,24 @@
                 @endif
 
                 <div class="card" style="background-color: #fff; border: 1px solid #cddfff;">
+                    <div class="card-header">
+                        <h3 class="card-title text-center" style="color: #012970;">Sections</h3>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title text-center" style="color: #012970;">Sections</h5>
+                        <br>
                         <!-- Button to trigger create modal -->
                         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createSectionModal">
                             Create Section
                         </button>
 
                         <!-- Sections Table with Show Students link -->
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Year Level</th>
-                                    <th>Section</th>
-                                    <th>Actions</th>
+                                    <th class="col-1">ID</th>
+                                    <th class="col-3">Year Level</th>
+                                    <th class="col-3">Section</th>
+                                    <th class="col-2">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>

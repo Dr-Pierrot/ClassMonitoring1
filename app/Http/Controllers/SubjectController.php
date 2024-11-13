@@ -138,16 +138,18 @@ class SubjectController extends Controller
         return redirect()->route('subjects.index')->with('success', 'Subject updated successfully.');
     }
 
-    public function destroy(Subject $subject)
-    {
-        if ($subject->user_id !== Auth::id()) {
-            return redirect()->route('subjects.index')->with('error', 'You are not authorized to delete this subject.');
-        }
+    public function destroy($id)
+{
+    // Find the subject by ID
+    $subject = Subject::findOrFail($id);
 
-        $subject->delete();
+    // Delete the subject
+    $subject->delete();
 
-        return redirect()->route('subjects.index')->with('success', 'Subject deleted successfully.');
-    }
+    // Redirect back to the subjects index with a success message
+    return redirect()->route('subjects.index')->with('success', 'Subject deleted successfully!');
+}
+
 
     public function chooseSubjects()
     {
@@ -155,19 +157,47 @@ class SubjectController extends Controller
         return view('subjects.choose', compact('subjects'));
     }
 
-    // Add the choose method for search functionality
-    public function choose(Request $request)
+    public function add(Request $request)
     {
-        $query = Subject::query();
-
-        // If a search term is provided, filter subjects by course_code or name
-        if ($request->has('search') && !empty($request->search)) {
-            $query->where('course_code', 'like', '%' . $request->search . '%')
-                  ->orWhere('name', 'like', '%' . $request->search . '%');
-        }
-
-        $subjects = $query->get();
-
-        return view('subjects.choose', compact('subjects'));
+        // Validate the input
+        $request->validate([
+            'course_code' => 'required|string|max:10',
+            'name' => 'required|string|max:255',
+        ]);
+    
+        // Create the new subject with the authenticated user's ID
+        $subject = new Subject();
+        $subject->course_code = $request->course_code;
+        $subject->name = $request->name;
+        $subject->user_id = auth()->id(); // This will set the user_id to the currently authenticated user's ID
+        $subject->save();
+    
+        return redirect()->route('subjects.choose')->with('success', 'Subject added successfully!');
+    
     }
+    public function addSelected(Request $request)
+{
+    // Validate that subjects are selected
+    $request->validate([
+        'subjects' => 'required|array|min:1',  // Ensure at least one subject is selected
+        'subjects.*' => 'exists:subjects,id',  // Ensure each selected subject exists in the database
+    ]);
+
+    // Get the selected subject IDs
+    $selectedSubjects = $request->input('subjects');
+    
+    // Process each selected subject (for example, assign it to a user, enroll a student, etc.)
+    foreach ($selectedSubjects as $subjectId) {
+        $subject = Subject::find($subjectId);
+        // Here, you can do whatever needs to be done with the selected subject, e.g., enrollment
+        // Example: Assign subjects to the authenticated user (or any other logic)
+        $subject->user_id = auth()->id();  // Just an example, modify according to your business logic
+        $subject->save();
+    }
+
+    // Redirect back with a success message
+    return redirect()->route('subjects.index')->with('success', 'Selected subjects added successfully!');
+}
+
+    
 }

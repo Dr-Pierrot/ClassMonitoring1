@@ -63,7 +63,7 @@
                             </table>
 
                             <!-- Submit Button for the selected subjects -->
-                            <button type="submit" class="btn btn-primary">Import Selected Subjects</button>
+                            <button type="submit" class="btn btn-primary">Add Selected Subjects</button>
                         </form>
                     </div>
                 </div>

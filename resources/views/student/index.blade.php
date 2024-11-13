@@ -135,15 +135,15 @@
                             </div>
                         </form>
 
-                        <table class="table">
+                        <table class="table table-bordered" style="background-color:#E3A833;">
                             <thead>
-                                <tr>
-                                    <th>Student Number</th>
-                                    <th>Name</th>
-                                    <th>Gender</th>
-                                    <th>Date of Birth</th>
-                                    <th>Student Type</th>
-                                    <th>Action</th>
+                                <tr class="text-center">
+                                    <th class="col-2">Student Number</th>
+                                    <th class="col-3">Name</th>
+                                    <th class="col-1">Gender</th>
+                                    <th class="col-2">Date of Birth</th>
+                                    <th class="col-2">Student Type</th>
+                                    <th class="col-2">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -153,7 +153,7 @@
                                         <td>{{ $student->last_name }}, {{ $student->first_name }} {{ $student->middle_name }}</td>
                                         <td>{{ $student->gender }}</td>
                                         <td>{{ $student->date_of_birth }}</td>
-                                        <td>{{ $student->student_type }}</td>
+                                        <td> {{ ucfirst($student->student_type) }}</td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-primary" onclick="showEditModal({{ $student }})">
                                                 Edit
@@ -287,7 +287,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="edit_course" class="form-label">Course</label>
-                            <input type="text" class="form-control" id="edit_course" name="course" required>
+                            <input type="text" class="form-control" id="edit_course" name="course" readonly required>
                         </div>
 
                         <div class="mb-3">

@@ -7,6 +7,7 @@
         body {
             background-color: #F6F9FF; /* Background color of the page */
         }
+
         .card {
             border-radius: 8px;
             margin-bottom: 20px;

@@ -117,12 +117,12 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
         <!-- Logo Section -->
-        <a href="{{ route('dashboard') }}" class="logo d-flex align-items-center">
-            <img src="{{ asset('assets/img/logo2.png') }}" alt="Class Monitoring Logo" class="img-fluid">
-            <span class="d-none d-lg-inline text-warning ms-2">Class Monitoring</span> <!-- Logo Text -->
+        <a href="{{ route('dashboard') }}" class="logo d-flex align-items-center justify-content-center">
+            <img src="{{ asset('assets/img/logo2.png') }}" alt="Class Monitoring Logo" class="text-center" width="100">
+            <!-- <span class="d-none d-lg-inline text-warning ms-2">Class Monitoring</span> <!-- Logo Text -->
         </a>
         <i class="bi bi-list toggle-sidebar-btn" onclick="toggleMenu()"> <!-- Updated burger menu -->
-            <span></span>
+            <!--<span></span>-->
             <span></span>
             <span></span>
         </i>
