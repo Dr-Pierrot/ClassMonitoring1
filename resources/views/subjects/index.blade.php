@@ -86,7 +86,7 @@
                                         <td>{{ $subject->course_code }}</td>
                                         <td>{{ $subject->name }}</td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-sm btn-primary" onclick="showEditModal({{ json_encode($subject) }})">Edit</button>
+                                            <!-- <button type="button" class="btn btn-sm btn-primary" onclick="showEditModal({{ json_encode($subject) }})">Edit</button> -->
                                             <button type="button" class="btn btn-sm btn-danger" onclick="showDeleteModal({{ $subject->id }})">Delete</button>
                                             <button class="btn btn-sm btn-success dropdown-toggle" type="button" id="otherDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Other
@@ -224,5 +224,7 @@ function showDeleteModal(subjectId) {
             var deleteModal = new bootstrap.Modal(document.getElementById('deleteSubjectModal'));
             deleteModal.show();
         }
+
+        
     </script>
 @endsection
