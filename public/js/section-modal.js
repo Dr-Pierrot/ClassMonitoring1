@@ -13,13 +13,8 @@ function showEditModal(section) {
     // Populate the edit form with current section data
     document.getElementById('edit_name').value = section.name;
     
-    // Create the description in the format: "BSIT - 1A"
-    const yearLevel = section.name.split(' ')[0]; // Extract year level number (e.g., '1')
-    const sectionLetter = section.description.split(' - ')[1]; // Extract section letter (e.g., 'A')
-    const description = `BSIT - ${yearLevel}${sectionLetter}`; // Full description (e.g., "BSIT - 1A")
-
     // Populate the description in the modal
-    document.getElementById('edit_description').value = description;
+    document.getElementById('edit_description').value = section.description;
 
     // Set form action for editing
     const form = document.getElementById('editForm');

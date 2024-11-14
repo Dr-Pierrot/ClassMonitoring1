@@ -15,7 +15,7 @@ class SubjectController extends Controller
     public function index()
     {
         $userId = Auth::id();  // Get the authenticated user's ID
-        $query = "SELECT * FROM user_subject 
+        $query = "SELECT user_subject.id, user_subject.subject_id, user_subject.user_id, subjects.course_code, subjects.name FROM user_subject 
                 JOIN subjects ON user_subject.subject_id = subjects.id 
                 WHERE user_subject.user_id = ?";
         $subjects = DB::select($query, [$userId]);
@@ -160,6 +160,16 @@ class SubjectController extends Controller
         return redirect()->route('subjects.index')->with('success', 'Subject deleted successfully!');
     }
 
+    public function destroySelected($id)
+    {
+        // Find and delete the record in the pivot table (user_subject)
+        DB::table('user_subject')->where('id', $id)->delete();
+
+        // Redirect back to the subjects index with a success message
+        return redirect()->route('subjects.index')->with('success', 'Selected Subject deleted successfully!');
+    }
+
+
 
     public function chooseSubjects()
     {
@@ -176,6 +186,15 @@ class SubjectController extends Controller
             'description' => 'nullable|string',
         ]);
     
+        // Check if the subject already exists
+        $subjectExists = Subject::where('course_code', $request->course_code)
+            ->where('name', $request->name)
+            ->exists();
+    
+        if ($subjectExists) {
+            return redirect()->back()->with('error', 'Subject already exists.');
+        }
+
         // Create the new subject with the authenticated user's ID
         $subject = new Subject();
         $subject->course_code = $request->course_code;
@@ -193,16 +212,29 @@ class SubjectController extends Controller
     {
         // Validate that subjects are selected
         $request->validate([
-            'subjects' => 'required|array|min:1',        // Ensure at least one subject is selected
-            'subjects.*' => 'exists:subjects,id',         // Ensure each selected subject exists in the database
+            'subjects' => 'required|array|min:1', // Ensure at least one subject is selected
+            'subjects.*' => 'exists:subjects,id',  // Ensure each selected subject exists in the database
         ]);
-
+    
         // Get the authenticated user ID
         $userId = Auth::id();
-
+    
         // Get the selected subject IDs from the request
         $selectedSubjects = $request->input('subjects');
 
+    
+        // Check if the combination of user_id and subject_id already exists
+        $existingSubjects = DB::table('user_subject')
+            ->whereIn('subject_id', $selectedSubjects)
+            ->where('user_id', $userId)
+            ->pluck('subject_id')
+            ->toArray();
+    
+        if (count($existingSubjects) > 0) {
+            // Find out which subjects are already added
+            return redirect()->back()->with('error', 'Some of the selected subjects are already added.');
+        }
+    
         // Prepare the data to insert into the user_subject pivot table
         $insertData = [];
         foreach ($selectedSubjects as $subjectId) {
@@ -213,14 +245,73 @@ class SubjectController extends Controller
                 'updated_at' => now(),  // Set the current timestamp
             ];
         }
-
+    
         // Insert the data directly into the user_subject table using DB
         DB::table('user_subject')->insert($insertData);
-
+    
         // Redirect back with a success message
         return redirect()->route('subjects.index')->with('success', 'Selected subjects added successfully!');
     }
+    
 
+    public function enrollStudents(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'section_id' => 'required', // Ensure valid enroll type
+            
+        ]);
 
+        // If the enroll type is 'section', enroll all students in that section
+        if ($request->enroll_type === 'section' && $request->section_id) {
+            $students = Student::where('section_id', $request->section_id)->get();
+
+            foreach ($students as $student) {
+                // Check if the student is already enrolled in the subject
+                $enrollmentExists = ClassCard::where('student_id', $student->id)
+                    ->where('subject_id', $request->subject_id)
+                    ->exists();
+
+                // Only enroll if the student is not already enrolled
+                if (!$enrollmentExists) {
+                    ClassCard::create([
+                        'student_id' => $student->id,
+                        'user_id' => Auth::id(),
+                        'subject_id' => $request->subject_id,
+                        'section_id' => $request->section_id,
+                    ]);
+                }
+            }
+
+            return redirect()->route('subjects.showEnroll', ['subject_id' => $request->subject_id])
+                ->with('success', 'All students from the selected section enrolled successfully.');
+        }
+
+        // If the enroll type is 'single', enroll the selected student
+        if ($request->enroll_type === 'single' && $request->student_id) {
+            // Check if the student is already enrolled in the subject
+            $enrollmentExists = ClassCard::where('student_id', $request->student_id)
+                ->where('subject_id', $request->subject_id)
+                ->exists();
+
+            // Optional: Check if student is already enrolled
+            if ($enrollmentExists) {
+                return redirect()->back()->with('error', 'Student is already enrolled in this subject.');
+            }
+
+            // Create the enrollment record
+            ClassCard::create([
+                'student_id' => $request->student_id,
+                'user_id' => Auth::id(),
+                'subject_id' => $request->subject_id,
+                'section_id' => $request->section_id,
+            ]);
+
+            return redirect()->route('subjects.showEnroll', ['subject_id' => $request->subject_id])
+                ->with('success', 'Student enrolled successfully.');
+        }
+
+        return redirect()->back()->with('error', 'Please select a section or a student.');
+    }
     
 }

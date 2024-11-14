@@ -6,16 +6,16 @@
     <div class="container">
         <!-- Success/Error Message -->
         @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @elseif(session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @elseif(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <div class="row">
             <div class="col-lg-12">
@@ -56,6 +56,7 @@
                                     @foreach($subjects as $subject)
                                         <tr class="subject-row">
                                             <td>
+                                                <!-- Checkbox for selecting a subject -->
                                                 <input type="checkbox" name="subjects[]" value="{{ $subject->id }}">
                                             </td>
                                             <td>{{ $subject->id }}</td>
@@ -63,11 +64,10 @@
                                             <td class="subject-name">{{ $subject->name }}</td>
                                             <td>{{ $subject->description }}</td>
                                             <td>
-                                            <!-- Button to Trigger Modal -->
-<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteSubjectModal" data-id="{{ $subject->id }}">
-    Delete
-</button>
-
+                                                <!-- Button to Trigger Modal -->
+                                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteSubjectModal" data-id="{{ $subject->id }}">
+                                                    Delete
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -105,7 +105,8 @@
             </div>
         </div>
     </div>
-    <!-- Import Subject Modal -->
+
+    <!-- Add Subject Modal -->
     <div class="modal fade" id="addSubjectModal" tabindex="-1" aria-labelledby="addSubjectModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -114,7 +115,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Form to import subjects -->
+                    <!-- Form to add new subject -->
                     <form method="POST" action="{{ route('subjects.add') }}">
                         @csrf
                         <div class="mb-3">
@@ -127,7 +128,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Subject Description</label>
-                            <input type="text" class="form-control" id="description" name="description" required>
+                            <input type="text" class="form-control" id="description" name="description">
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
@@ -135,91 +136,92 @@
             </div>
         </div>
     </div>
-  <!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteSubjectModal" tabindex="-1" aria-labelledby="deleteSubjectModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteSubjectModalLabel">Confirm Deletion</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this subject? This action cannot be undone.
-            </div>
-            <div class="modal-footer">
-                <!-- Form for deleting the subject -->
-                <form id="deleteSubjectForm" action="" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteSubjectModal" tabindex="-1" aria-labelledby="deleteSubjectModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteSubjectModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this subject? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <!-- Form for deleting the subject -->
+                    <form id="deleteSubjectForm" action="" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-    // Get the modal and form
-    const deleteSubjectModal = document.getElementById('deleteSubjectModal');
-    const deleteSubjectForm = document.getElementById('deleteSubjectForm');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the modal and form
+            const deleteSubjectModal = document.getElementById('deleteSubjectModal');
+            const deleteSubjectForm = document.getElementById('deleteSubjectForm');
 
-    // Add event listener for when the modal is shown
-    deleteSubjectModal.addEventListener('show.bs.modal', function (event) {
-        // Get the button that triggered the modal
-        const button = event.relatedTarget;
+            // Add event listener for when the modal is shown
+            deleteSubjectModal.addEventListener('show.bs.modal', function (event) {
+                // Get the button that triggered the modal
+                const button = event.relatedTarget;
 
-        // Get the subject ID from the data-id attribute
-        const subjectId = button.getAttribute('data-id');
-        
-        // Set the form action dynamically based on the subject ID
-        const formAction = `/subjects/destroy/${subjectId}`;
-        deleteSubjectForm.action = formAction;
-        
-        console.log("Form action updated to:", formAction);  // For debugging
-    });
-});
-</script>
+                // Get the subject ID from the data-id attribute
+                const subjectId = button.getAttribute('data-id');
+                
+                // Set the form action dynamically based on the subject ID
+                const formAction = `/subjects/destroy/${subjectId}`;
+                deleteSubjectForm.action = formAction;
+                
+                console.log("Form action updated to:", formAction);  // For debugging
+            });
+        });
+    </script>
 
 @endsection
 
 @section('scripts')
-<script>
-    
+    <script>
+        // Search button functionality
+        const searchButton = document.getElementById('searchButton');
+        const searchInput = document.getElementById('searchInput');
 
-
-
-    // Search button functionality
-    const searchButton = document.getElementById('searchButton');
-    const searchInput = document.getElementById('searchInput');
-
-    searchButton.addEventListener('click', function () {
-        const searchTerm = searchInput.value.toLowerCase();
-        filterTable(searchTerm);
-    });
-
-    // Function to filter table rows based on search term
-    function filterTable(searchTerm) {
-        const rows = Array.from(document.querySelectorAll('#subjectsTable tbody tr'));
-
-        rows.forEach(row => {
-            const subjectName = row.querySelector('.subject-name').textContent.toLowerCase();
-            const isMatch = subjectName.includes(searchTerm);
-
-            // Toggle row visibility
-            row.style.display = isMatch ? '' : 'none';
-
-            // Optionally highlight matching text (clear first)
-            row.querySelector('.subject-name').innerHTML = row.querySelector('.subject-name').textContent;
-            if (isMatch && searchTerm) {
-                const highlighted = row.querySelector('.subject-name').textContent.replace(
-                    new RegExp(`(${searchTerm})`, 'gi'),
-                    '<span class="bg-warning">$1</span>'
-                );
-                row.querySelector('.subject-name').innerHTML = highlighted;
-            }
+        searchButton.addEventListener('click', function () {
+            const searchTerm = searchInput.value.toLowerCase();
+            filterTable(searchTerm);
         });
-    }
-</script>
+
+        /**
+         * Function to filter table rows based on search term
+         * @param {string} searchTerm - The term to search for in the table
+         */
+        function filterTable(searchTerm) {
+            const rows = Array.from(document.querySelectorAll('#subjectsTable tbody tr'));
+
+            rows.forEach(row => {
+                const subjectName = row.querySelector('.subject-name').textContent.toLowerCase();
+                const isMatch = subjectName.includes(searchTerm);
+
+                // Toggle row visibility
+                row.style.display = isMatch ? '' : 'none';
+
+                // Optionally highlight matching text (clear first)
+                row.querySelector('.subject-name').innerHTML = row.querySelector('.subject-name').textContent;
+                if (isMatch && searchTerm) {
+                    const highlighted = row.querySelector('.subject-name').textContent.replace(
+                        new RegExp(`(${searchTerm})`, 'gi'),
+                        '<span class="bg-warning">$1</span>'
+                    );
+                    row.querySelector('.subject-name').innerHTML = highlighted;
+                }
+            });
+        }
+    </script>
 @endsection
+

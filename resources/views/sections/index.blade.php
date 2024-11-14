@@ -85,18 +85,19 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $years = array(1 => 'First Year', 2 => 'Second Year', 3 => 'Third Year', 4 => 'Fourth Year'); ?>
                                 @foreach($sections as $section)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $section->name }}</td>
-                                        <td>{{ $section->description }}</td>
+                                        <td>{{ $years[$section->name] }}</td>
+                                        <td>BSIT - {{ $section->name }}{{ $section->description }}</td>
                                         <td>
                                             <!-- Link to show students in this section -->
                                             <a href="{{ route('sections.students', $section->id) }}" class="btn btn-success btn-sm">
                                                 Show Students
                                             </a>
                                             <!-- Other actions like Edit/Delete can also go here -->
-                                            <button type="button" class="btn btn-sm btn-primary" onclick="showEditModal({{ $section->id }})">
+                                            <button type="button" class="btn btn-sm btn-primary" onclick="showEditModal({{ $section }})">
                                                 Edit
                                             </button>
                                             <button type="button" class="btn btn-sm btn-danger" onclick="showDeleteModal({{ $section->id }})">
@@ -129,10 +130,10 @@
                             <label for="name" class="form-label">Year Level</label>
                             <select class="form-control" id="name" name="name" required>
                                 <option value="">Select Year Level</option>
-                                <option value="1st Year">1st Year</option>
-                                <option value="2nd Year">2nd Year</option>
-                                <option value="3rd Year">3rd Year</option>
-                                <option value="4th Year">4th Year</option>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                                <option value="4">4th Year</option>
                             </select>
                         </div>
 
@@ -140,17 +141,84 @@
                             <label for="description" class="form-label">Section</label>
                             <select class="form-control" id="description" name="description" required>
                                 <option value="">Select Section</option>
-                                <option value="BSIT - A">A</option>
-                                <option value="BSIT - B">B</option>
-                                <option value="BSIT - C">C</option>
-                                <option value="BSIT - D">D</option>
-                                <option value="BSIT - E">E</option>
-                                <option value="BSIT - F">F</option>
-                                <option value="BSIT - G">G</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                                <option value="G">G</option>
                             </select>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Section Modal -->
+    <div class="modal fade" id="editSectionModal" tabindex="-1" aria-labelledby="editSectionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editSectionModalLabel">Edit Section</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for editing section -->
+                    <form id="editForm" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="edit_name" class="form-label">Year Level</label>
+                            <select class="form-control" id="edit_name" name="edit_name" required>
+                                <option value="">Select Year Level</option>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                                <option value="4">4th Year</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_description" class="form-label">Section</label>
+                            <select class="form-control" id="edit_description" name="edit_description" required>
+                                <option value="">Select Section</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                                <option value="G">G</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Section Modal -->
+    <div class="modal fade" id="deleteSectionModal" tabindex="-1" aria-labelledby="deleteSectionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteSectionModalLabel">Delete Section</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this section?
+                </div>
+                <div class="modal-footer">
+                    <form id="deleteForm" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
                 </div>
             </div>

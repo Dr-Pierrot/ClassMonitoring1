@@ -124,7 +124,7 @@
                                         <option value="">All Sections</option>
                                         @foreach($sections as $section)
                                             <option value="{{ $section->id }}" {{ request('section_id') == $section->id ? 'selected' : '' }}>
-                                                {{ $section->name }}
+                                                BSIT - {{ $section->name }}{{ $section->description }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -142,7 +142,8 @@
                                     <th class="col-3">Name</th>
                                     <th class="col-1">Gender</th>
                                     <th class="col-2">Date of Birth</th>
-                                    <th class="col-2">Student Type</th>
+                                    <th class="col-1">Type</th>
+                                    <th class="col-2">Section</th>
                                     <th class="col-2">Action</th>
                                 </tr>
                             </thead>
@@ -154,6 +155,7 @@
                                         <td>{{ $student->gender }}</td>
                                         <td>{{ $student->date_of_birth }}</td>
                                         <td> {{ ucfirst($student->student_type) }}</td>
+                                        <td>BSIT - {{ $student->section->name }}{{ $student->section->description }}</td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-primary" onclick="showEditModal({{ $student }})">
                                                 Edit
@@ -225,7 +227,7 @@
                             <select class="form-select" id="section_id" name="section_id" required>
                                 <option value="">Select Section</option>
                                 @foreach ($sections as $section)
-                                    <option value="{{ $section->id }}">{{ $section->name }}</option>
+                                    <option value="{{ $section->id }}">BSIT - {{ $section->name }}{{ $section->description }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -295,7 +297,7 @@
                             <select class="form-select" id="edit_section_id" name="section_id" required>
                                 <option value="">Select Section</option>
                                 @foreach ($sections as $section)
-                                    <option value="{{ $section->id }}">{{ $section->name }}</option>
+                                    <option value="{{ $section->id }}">BSIT - {{ $section->name }}{{ $section->description }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -359,7 +361,7 @@
                             <select class="form-select" id="section_id" name="section_id" required>
                                 <option value="">Select Section</option>
                                 @foreach ($sections as $section)
-                                    <option value="{{ $section->id }}">{{ $section->name }}</option>
+                                    <option value="{{ $section->id }}">BSIT - {{ $section->name }}{{ $section->description }}</option>
                                 @endforeach
                             </select>
                         </div>

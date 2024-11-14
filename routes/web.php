@@ -172,6 +172,8 @@ Route::get('/sections/by-year/{year}', [SectionController::class, 'getSectionsBy
 
 Route::post('/subjects/add', [SubjectController::class, 'add'])->name('subjects.add');
 Route::post('/subjects/add-selected', [SubjectController::class, 'addSelected'])->name('subjects.addSelected');
+Route::post('/subjects/enroll', [SubjectController::class, 'enrollStudents'])->name('subjects.enrollStudents');
 // Route for deleting a subject
 Route::delete('/subjects/destroy/{id}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
+Route::delete('/subjects/selected/{id}', [SubjectController::class, 'destroySelected'])->name('subjects.destroySelected');
 

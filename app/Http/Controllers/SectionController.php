@@ -12,12 +12,12 @@ class SectionController extends Controller
     public function index()
     {   
         // Define the custom order for Year Levels
-        $yearLevels = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
+        $yearLevels = ['1', '2', '3', '4'];
 
         // Retrieve sections and sort them first by Year Level, then by Section description (alphabetically)
         $sections = Section::whereIn('name', $yearLevels)
                            ->where('user_id', Auth::id())
-                           ->orderByRaw("FIELD(name, '1st Year', '2nd Year', '3rd Year', '4th Year')")
+                           ->orderByRaw("FIELD(name, '1', '2', '3', '4')")
                            ->orderBy('description', 'asc')
                            ->get();
     
@@ -52,18 +52,13 @@ class SectionController extends Controller
     public function update(Request $request, Section $section)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'edit_name' => 'required',
+            'edit_description' => 'required',
         ]);
     
-        if ($section->user_id != Auth::id()) {
-            return redirect()->route('sections.index')->with('error', 'You are not authorized to edit this section.');
-        }
-    
-        $sectionExists = Section::where('name', $request->name)
-                                ->where('description', $request->description)
+        $sectionExists = Section::where('name', $request->edit_name)
+                                ->where('description', $request->edit_description)
                                 ->where('user_id', Auth::id())
-                                ->where('id', '!=', $section->id)
                                 ->exists();
         
         if ($sectionExists) {
@@ -71,8 +66,8 @@ class SectionController extends Controller
         }
     
         $section->update([
-            'name' => $request->name,
-            'description' => $request->description,
+            'name' => $request->edit_name,
+            'description' => $request->edit_description,
         ]);
         
         return redirect()->route('sections.index')->with('success', 'Section updated successfully.');
