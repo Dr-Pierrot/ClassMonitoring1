@@ -130,7 +130,12 @@
                             <label for="description" class="form-label">Subject Description</label>
                             <input type="text" class="form-control" id="description" name="description">
                         </div>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <div class="row">
+                            <div class="col-12 text-end">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                        
                     </form>
                 </div>
             </div>
@@ -150,11 +155,19 @@
                 </div>
                 <div class="modal-footer">
                     <!-- Form for deleting the subject -->
-                    <form id="deleteSubjectForm" action="" method="POST">
+                    <form id="deleteSubjectForm" action="" style="width: 100%;"  method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <div class="row">
+                            <div class="col-6 text-start">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                            <div class="col-6 text-end">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                        
+                        
                     </form>
                 </div>
             </div>

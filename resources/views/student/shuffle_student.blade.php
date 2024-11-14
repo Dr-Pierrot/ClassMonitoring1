@@ -102,7 +102,9 @@
                     </tbody>
                 </table>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary mt-3">Save Recitation</button>
+                    <?php if(isset($shuffledStudents) && $shuffledStudents->isNotEmpty()): ?>
+                        <button type="submit" class="btn btn-primary mt-3">Save Recitation</button>
+                    <?php endif; ?>
                 </div>
             </form>
         </div>

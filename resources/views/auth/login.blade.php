@@ -4,39 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    
-    <!-- Favicon and Manifest -->
     <link rel="icon" href="{{ asset('assets/img/logo2.png') }}">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#007bff">
-
-    <!-- Essential Styles -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
-
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#6777ef"/>
-    <link rel="apple-touch-icon" href="{{ asset('assets/img/logo2.png') }}">
-    <link rel="manifest" href="{{ asset('/manifest.json') }}">
-    
-    <!-- Add Web App Capabilities -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Class Monitoring">
     <meta name="description" content="Login to Class Monitoring - College of Computer Studies">
-    
 </head>
 <body>
+    <style>
+        .left-panel {
+            width: 250px;
+            background-color: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-logo {
+            width: 100%;
+            max-width: 380px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .left-panel p {
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 0px;
+        }
+
+        .logo-row {
+            display: flex;
+            justify-content: space-between;
+            width: 50%;
+            margin-top: 20px;
+        }
+
+        .side-image {
+            width: 100%;
+            max-width: 100px;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .left-panel {
+                width: 200px;
+            }
+
+            .main-logo {
+                max-width: 150px;
+            }
+
+            .side-image {
+                max-width: 60px;
+            }
+
+            .left-panel p {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .left-panel {
+                width: 280px;
+                padding-bottom: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .logo-row {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .main-logo {
+                max-width: 130px;
+            }
+
+            .side-image {
+                max-width: 50px;
+            }
+
+            .left-panel p {
+                font-size: 10px;
+            }
+        }
+    </style>
     <div class="container custom-container">
         <div class="left-panel">
             <img class="main-logo" src="assets/img/logo2.png" alt="College Logo">
             <p>for the College of Computer Studies at Dominican College of Tarlac</p>
-            
-           <div class="logo-row">
-               <img src="assets/img/dct.svg" alt="College Logo" class="side-image">
-               <img src="assets/img/ccs_resized_85x85.png" alt="CSS Image" class="side-image">
-           </div>
+
+            <div class="logo-row">
+                <img src="assets/img/dct.svg" alt="College Logo" class="side-image">
+                <img src="assets/img/ccs_resized_85x85.png" alt="CSS Image" class="side-image">
+            </div>
         </div>
 
         <div class="right-panel d-flex flex-column justify-content-end">
@@ -46,15 +117,6 @@
                     <hr>
                 </div>
                 <div class="card-body">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group">
@@ -76,24 +138,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Register Service Worker -->
-    <script src="{{ asset('/sw.js') }}"></script>
-
-    <script>
-        if ("serviceWorker" in navigator) {
-            // Register a service worker hosted at the root of the site using the default scope.
-            navigator.serviceWorker.register("/sw.js").then(
-                (registration) => {
-                    console.log("Service worker registration succeeded:", registration);
-                },
-                (error) => {
-                    console.error(`Service worker registration failed: ${error}`);
-                }
-            );
-        } else {
-            console.error("Service workers are not supported.");
-        }
-    </script>
 </body>
 </html>
+

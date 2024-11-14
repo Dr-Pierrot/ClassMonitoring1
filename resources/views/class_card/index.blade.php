@@ -796,7 +796,11 @@
                             <label for="over" class="form-label">Over Score</label>
                             <input type="number" class="form-control" id="over" placeholder="Over score" name="over_score" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Save Score</button>
+                        <div class="row">
+                            <div class="col-12 text-end">
+                                <button type="submit" class="btn btn-primary">Save Score</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -824,7 +828,11 @@
                             <label for="edit_performanceOverScore" class="form-label">Over Score</label>
                             <input type="number" class="form-control" id="edit_performanceOverScore" placeholder="Enter over score" name="over_score" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Save Score</button>
+                        <div class="row">
+                            <div class="col-12 text-end">
+                                <button type="submit" class="btn btn-primary">Save Score</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

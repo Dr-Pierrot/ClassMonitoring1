@@ -85,18 +85,18 @@
                                             <!-- <button type="button" class="btn btn-sm btn-primary" onclick="showEditModal({{ json_encode($subject) }})">Edit</button> -->
                                             <button type="button" class="btn btn-sm btn-success" onclick="showEnrollModal({{ $subject->subject_id }})">Enroll Students</button>
                                             <button type="button" class="btn btn-sm btn-danger" onclick="showDeleteModal({{ $subject->id }})">Delete</button>
-                                            <button class="btn btn-sm btn-success dropdown-toggle" type="button" id="otherDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <button class="btn btn-sm btn-success dropdown-toggle ddother" type="button" id="otherDropdown_{{ $subject->subject_id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Other
                                             </button>
-                                            <ul class="dropdown-menu" aria-labelledby="otherDropdownMenu">
+                                            <ul class="dropdown-menu" aria-labelledby="otherDropdown_{{ $subject->subject_id }}">
                                                 <li><a class="dropdown-item" href="{{ route('attendance.index', ['subject_id' => $subject->subject_id]) }}">Check Attendance</a></li>
                                                 <li><a class="dropdown-item" href="{{ route('students.shuffle', ['subject_id' => $subject->subject_id]) }}">Manage Recitation</a></li>
                                                 <li><a class="dropdown-item" href="{{ route('class-card.index', ['subject_id' => $subject->subject_id]) }}">Record Grades</a></li>
                                             </ul>
-                                            <button class="btn btn-sm btn-success dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <button class="btn btn-sm btn-success dropdown-toggle ddexport" type="button" id="exportDropdown_{{ $subject->subject_id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Export
                                             </button>
-                                            <ul class="dropdown-menu" aria-labelledby="exportDropdownMenu">
+                                            <ul class="dropdown-menu" aria-labelledby="exportDropdown_{{ $subject->subject_id }}">
                                                 <li><a class="dropdown-item" href="{{ route('students.exportPrelim', ['subject_id' => $subject->subject_id]) }}">Export Prelim</a></li>
                                                 <li><a class="dropdown-item" href="{{ route('students.exportMidterm', ['subject_id' => $subject->subject_id]) }}">Export Midterm</a></li>
                                                 <li><a class="dropdown-item" href="{{ route('students.exportFinals', ['subject_id' => $subject->subject_id]) }}">Export Finals</a></li>
@@ -125,11 +125,17 @@
                     Are you sure you want to delete this subject? This action cannot be undone.
                 </div>
                 <div class="modal-footer">
-                    <form id="deleteSelectedSubjectForm" action="" method="POST">
+                    <form id="deleteSelectedSubjectForm" style="width: 100%;" action="" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <div class="row">
+                            <div class="col-6 text-start">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                            <div class="col-6 text-end">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -159,35 +165,41 @@
                             </select>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary">Enroll</button>
-                    </form>
                 </div>
-
+                <div class="modal-footer">
+                    <div class="row" style="width: 100%;">
+                        <div class="col-6 text-start">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                        <div class="col-6 text-end">
+                            <button type="submit" class="btn btn-primary">Enroll</button>    
+                        </div>
+                    </div>
+                </div>
+                </form>
             </div>
         </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Initialize "Other" dropdown toggle on button click
-            var otherDropdownButton = document.getElementById('otherDropdown');
-            var otherDropdownMenu = document.getElementById('otherDropdownMenu');
-
-            // Add click event to show the "Other" dropdown
-            otherDropdownButton.addEventListener('click', function () {
-                var bootstrapDropdown = new bootstrap.Dropdown(otherDropdownButton);
-                bootstrapDropdown.toggle();  // This will toggle the dropdown visibility
-            });
-
-            // Initialize "Export" dropdown toggle on button click
-            var exportDropdownButton = document.getElementById('exportDropdown');
-            var exportDropdownMenu = document.getElementById('exportDropdownMenu');
-
-            // Add click event to show the "Export" dropdown
-            exportDropdownButton.addEventListener('click', function () {
-                var bootstrapDropdown = new bootstrap.Dropdown(exportDropdownButton);
-                bootstrapDropdown.toggle();  // This will toggle the dropdown visibility
-            });
+    // Add event listener for the "Other" dropdown buttons
+    var otherDropdownButtons = document.querySelectorAll('.ddother');
+    otherDropdownButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var bootstrapDropdown = new bootstrap.Dropdown(button);
+            bootstrapDropdown.toggle();  // Toggle the dropdown menu
         });
+    });
+
+    // Add event listener for the "Export" dropdown buttons
+    var exportDropdownButtons = document.querySelectorAll('.ddexport');
+    exportDropdownButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var bootstrapDropdown = new bootstrap.Dropdown(button);
+            bootstrapDropdown.toggle();  // Toggle the dropdown menu
+        });
+    });
+});
     </script>
 
     <script>
