@@ -139,7 +139,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th class="col-2">Student Number</th>
-                                    <th class="col-3">Name</th>
+                                    <th class="col-2">Name</th>
                                     <th class="col-1">Gender</th>
                                     <th class="col-2">Date of Birth</th>
                                     <th class="col-1">Type</th>
@@ -200,7 +200,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="middle_name" class="form-label">Middle Name</label>
-                            <input type="text" class="form-control" id="middle_name" name="middle_name" required>
+                            <input type="text" class="form-control" id="middle_name" name="middle_name">
                         </div>
                         <div class="mb-3">
                             <label for="date_of_birth" class="form-label">Date of Birth</label>
@@ -281,7 +281,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="edit_middle_name" class="form-label">Middle Name</label>
-                            <input type="text" class="form-control" id="edit_middle_name" name="middle_name" required>
+                            <input type="text" class="form-control" id="edit_middle_name" name="middle_name">
                         </div>
                         <div class="mb-3">
                             <label for="edit_date_of_birth" class="form-label">Date of Birth</label>

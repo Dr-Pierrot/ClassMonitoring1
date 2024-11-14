@@ -69,10 +69,10 @@
                         <table class="table table-bordered" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Course Code</th>
-                                    <th>Name</th>
-                                    <th>Actions</th>
+                                    <th class="col-1">ID</th>
+                                    <th class="col-2">Course Code</th>
+                                    <th class="col-3">Name</th>
+                                    <th class="col-3">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,9 +81,9 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $subject->course_code }}</td>
                                         <td>{{ $subject->name }}</td>
-                                        <td class="text-center">
+                                        <td class="text-center" style="display: flex; justify-content: space-between; ">
                                             <!-- <button type="button" class="btn btn-sm btn-primary" onclick="showEditModal({{ json_encode($subject) }})">Edit</button> -->
-                                            <button type="button" class="btn btn-sm btn-success" onclick="showEnrollModal({{ $subject->subject_id }})">Enroll Students</button>
+                                            <button type="button" class="btn btn-sm btn-warning" onclick="showEnrollModal({{ $subject->subject_id }})">Enroll Students</button>
                                             <button type="button" class="btn btn-sm btn-danger" onclick="showDeleteModal({{ $subject->id }})">Delete</button>
                                             <button class="btn btn-sm btn-success dropdown-toggle ddother" type="button" id="otherDropdown_{{ $subject->subject_id }}" data-bs-toggle="dropdown" aria-expanded="false">
                                                 Other

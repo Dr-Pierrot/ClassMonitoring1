@@ -79,8 +79,8 @@
                             <thead>
                                 <tr>
                                     <th class="col-1">ID</th>
-                                    <th class="col-3">Year Level</th>
-                                    <th class="col-3">Section</th>
+                                    <th class="col-2">Year Level</th>
+                                    <th class="col-2">Section</th>
                                     <th class="col-2">Actions</th>
                                 </tr>
                             </thead>
