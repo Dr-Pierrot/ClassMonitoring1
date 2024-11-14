@@ -74,6 +74,11 @@ class StudentController extends Controller
             'student_type' => 'nullable|in:regular,irregular', // Add validation for student_type
         ]);
 
+        $studentExists = Student::where('student_number', $request->student_number)->exists();
+
+        if ($studentExists) {
+            return redirect()->route('students.index')->with('error', 'Student number already exists.');
+        }
         // Create the student
         $student = Student::create([
             'student_number' => $request->student_number,

@@ -35,6 +35,9 @@
                     </div>
                 </form>
             </div>
+            <div class="card-footer text-center">
+                <a href="{{ route('login') }}" class="btn btn-danger">Cancel</a>
+            </div>
         </div>
     </div>
     <script src="js/main.js"></script>

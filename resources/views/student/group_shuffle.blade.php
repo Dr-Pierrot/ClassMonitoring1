@@ -31,7 +31,7 @@
                         <option value="">All Subjects</option>
                         @if(isset($subjects))
                             @foreach($subjects as $subject)
-                                <option value="{{ $subject->subject_id }}" {{ isset($subjectId) && $subjectId == $subject->id ? 'selected' : '' }}>{{ $subject->name }}</option>
+                                <option value="{{ $subject->subject_id }}" {{ isset($subjectId) && $subjectId == $subject->subject_id ? 'selected' : '' }}>{{ $subject->name }}</option>
                             @endforeach
                         @endif
                     </select>
