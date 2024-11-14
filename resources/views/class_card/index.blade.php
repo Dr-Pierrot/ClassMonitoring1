@@ -43,7 +43,7 @@
                         @if(isset($sections))
                             @foreach($sections as $section)
                                 <option value="{{ $section->id }}" {{ request('section_id') == $section->id ? 'selected' : ($student->section->id == $section->id ? 'selected' : '') }}>
-                                    {{ $section->name }}
+                                    BSIT - {{ $section->name }}{{ $section->description }}
                                 </option>
                             @endforeach
                         @endif
@@ -90,7 +90,7 @@
                                 <p><strong>Course:</strong> {{ $student->course }}</p>
                             </div>
                             <div class="col-md-3">
-                                <p><strong>Section:</strong> {{ $student->section->name }}</p>
+                                <p><strong>Section:</strong> BSIT - {{ $student->section->name }}{{ $student->section->description }}</p>
                             </div>
                         </div>
                     </div>

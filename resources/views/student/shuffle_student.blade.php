@@ -44,7 +44,7 @@
                         <option value="">Select a Section</option>
                         @if(isset($sections))
                             @foreach($sections as $section)
-                                <option value="{{ $section->id }}">{{ $section->name }}</option>
+                                <option value="{{ $section->id }}">BSIT - {{ $section->name }}{{ $section->description }}</option>
                             @endforeach
                         @endif
                     </select>
@@ -82,7 +82,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $student->student->last_name }}, {{ $student->student->first_name }} {{ $student->student->middle_name }}</td>
-                                    <td>{{ $student->section->name }}</td>
+                                    <td>BSIT - {{ $student->section->name }}{{ $student->section->description }}</td>
                                     <td>{{ $student->subject->name }}</td>
                                     <td class="text-center">
                                         <input type="number" name="scores[{{ $student->student->id }}][score]" id="score_{{ $student->student->id }}" class="form-control" placeholder="Enter score" min="0" required>
