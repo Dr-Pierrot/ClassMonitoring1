@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Imports\StudentsImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 use App\Models\Section;
 use App\Models\Subject;
 use App\Models\Score;
@@ -449,7 +450,10 @@ class StudentController extends Controller
 
         // Fetch sections and subjects for the dropdowns
         $sections = Section::where('user_id', $teacherId)->get();
-        $subjects = Subject::where('user_id', $teacherId)->get();
+        $query = "SELECT user_subject.id, user_subject.subject_id, user_subject.user_id, subjects.course_code, subjects.name FROM user_subject 
+                JOIN subjects ON user_subject.subject_id = subjects.id 
+                WHERE user_subject.user_id = ?";
+        $subjects = DB::select($query, [auth()->user()->id]);
 
         // Check if the request is a POST (form submission)
         if ($request->isMethod('post')) {
@@ -466,7 +470,7 @@ class StudentController extends Controller
                     return $query->where('section_id', $sectionId);
                 })
                 ->get();
-
+            
             // Shuffle the students
             $shuffledStudents = $students->shuffle();
 
@@ -480,8 +484,10 @@ class StudentController extends Controller
                 $groups[$groupIndex][] = $student; // Add the student to the corresponding group
             }
 
+           
+
             // Return the view with the groups and form options
-            return view('student.group_shuffle', compact('sections', 'subjects', 'groups', 'studentsPerGroup', 'subjectId', 'sectionId'));
+            return view('student.group_shuffle', compact('students','sections', 'subjects', 'groups', 'studentsPerGroup', 'subjectId', 'sectionId'));
         }
 
         // If not a POST request, just show the form

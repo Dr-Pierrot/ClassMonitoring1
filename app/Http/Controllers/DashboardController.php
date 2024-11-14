@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Student;
 use App\Models\Section;
 use App\Models\Subject;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -24,7 +25,11 @@ class DashboardController extends Controller
         } else {
             // For teachers, calculate the count only for the logged-in teacher's data
             $studentsCount = Student::where('user_id', $user->id)->count();
-            $subjectsCount = Subject::where('user_id', $user->id)->count();
+            $query = "SELECT user_subject.id, user_subject.subject_id, user_subject.user_id, subjects.course_code, subjects.name FROM user_subject 
+                JOIN subjects ON user_subject.subject_id = subjects.id 
+                WHERE user_subject.user_id = ?";
+            $subjects = DB::select($query, [$user->id]);
+            $subjectsCount = count($subjects);
             $sectionsCount = Section::where('user_id', $user->id)->count();
 
             return view('dashboard', compact('studentsCount', 'subjectsCount', 'sectionsCount'));

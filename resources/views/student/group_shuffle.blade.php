@@ -31,7 +31,7 @@
                         <option value="">All Subjects</option>
                         @if(isset($subjects))
                             @foreach($subjects as $subject)
-                                <option value="{{ $subject->id }}" {{ isset($subjectId) && $subjectId == $subject->id ? 'selected' : '' }}>{{ $subject->name }}</option>
+                                <option value="{{ $subject->subject_id }}" {{ isset($subjectId) && $subjectId == $subject->id ? 'selected' : '' }}>{{ $subject->name }}</option>
                             @endforeach
                         @endif
                     </select>
@@ -43,7 +43,9 @@
                         <option value="">All Sections</option>
                         @if(isset($sections))
                             @foreach($sections as $section)
-                                <option value="{{ $section->id }}" {{ isset($sectionId) && $sectionId == $section->id ? 'selected' : '' }}>{{ $section->name }}</option>
+                                <option value="{{ $section->id }}" {{ isset($sectionId) && $sectionId == $section->id ? 'selected' : '' }}>
+                                    BSIT - {{ $section->name }}{{ $section->description }}
+                                </option>
                             @endforeach
                         @endif
                     </select>
@@ -51,7 +53,7 @@
 
                 <div class="form-group">
                     <label for="students_per_group">Number of Students Per Group:</label>
-                    <input type="number" class="form-control" id="students_per_group" name="students_per_group" min="1" required>
+                    <input type="number" class="form-control" id="students_per_group" name="students_per_group" min="1" value="1" required>
                 </div>
                 <br>
                 <div class="form-group">
@@ -60,7 +62,6 @@
             </form>
 
             <h5 class="mt-4" style="color: #E3A833;">Student Groups:</h5>
-
             <!-- Table to display groups -->
             @if(isset($groups) && count($groups) > 0)
                 @foreach($groups as $index => $group)
@@ -68,11 +69,11 @@
                     <table class="table table-bordered mt-3" style="background-color: #ffffff;">
                         <thead>
                             <tr>
-                                <th>Count</th>
-                                <th>Student Number</th>
-                                <th>Student Name</th>
-                                <th>Section</th>
-                                <th>Subject</th>
+                                <th class="col-1">Count</th>
+                                <th class="col-2">Student Number</th>
+                                <th class="col-2">Student Name</th>
+                                <th class="col-1">Section</th>
+                                <th class="col-1">Subject</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,8 +82,8 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $student->student->student_number }}</td>
-                                        <td>{{ $student->student->last_name }}, {{ $student->first_name }} {{ $student->middle_name }}</td>
-                                        <td>{{ $student->section->name }}</td>
+                                        <td>{{ $student->student->last_name }}, {{ $student->student->first_name }} {{ $student->student->middle_name }}</td>
+                                        <td>BSIT - {{ $student->section->name }}{{ $student->section->description }}</td>
                                         <td>{{ $student->subject->name }}</td>
                                     </tr>
                                 @endforeach
