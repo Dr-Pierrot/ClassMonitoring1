@@ -150,21 +150,12 @@
                         <input type="hidden" name="subject_id" id="subject_id">
                         
                         <div class="mb-3">
-                            <label for="year_level" class="form-label">Year Level</label>
-                            <select class="form-select" id="year_level" name="year_level" required>
-                                <option value="">Select Year Level</option>
-                                <option value="1">1st Year</option>
-                                <option value="2">2nd Year</option>
-                                <option value="3">3rd Year</option>
-                                <option value="4">4th Year</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="section" class="form-label">Section</label>
-                            <select class="form-select" id="section" name="section" required>
+                            <label for="section_id" class="form-label">Section</label>
+                            <select class="form-select" id="section_id" name="section_id" required>
                                 <option value="">Select Section</option>
-                                <!-- Sections will be populated dynamically here -->
+                                @foreach ($sections as $section)
+                                    <option value="{{ $section->id }}">BSIT - {{ $section->name }}{{ $section->description }}</option>
+                                @endforeach 
                             </select>
                         </div>
                         
