@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="container mt-5">
-    <h2 style="color: #E3A833;">Group Shuffling</h2>
 
     <!-- Display Validation Errors -->
     @if ($errors->any())
@@ -19,10 +18,11 @@
 
     <!-- Group Shuffling Section -->
     <div class="card mb-4" style="background-color: #ffffff;">
-        <div class="card-header" style="background-color: #E3A833; color: white;">
-            <h4>Group Shuffling</h4>
+        <div class="card-header text-center">
+            <h4 class="card-title">Group Shuffling</h4>
         </div>
-        <div class="card-body" style="background-color: #F6F9FF;">
+        <div class="card-body">
+            <br>
             <form action="{{ route('students.group.shuffle') }}" method="POST">
                 @csrf <!-- This is necessary for CSRF protection -->
                 <div class="form-group">

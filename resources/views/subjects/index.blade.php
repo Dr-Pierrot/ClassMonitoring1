@@ -61,7 +61,7 @@
                         <div class="mb-3 mt-3">
                             <!-- Choose Subjects and Enroll Students Buttons Side by Side -->
                             <a href="{{ route('subjects.choose') }}" class="btn btn-primary me-2">
-                                <strong>Choose Subjects</strong>
+                                Choose Subjects
                             </a>
                         </div>
                     

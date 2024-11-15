@@ -81,7 +81,7 @@
                                     <th class="col-1">ID</th>
                                     <th class="col-2">Year Level</th>
                                     <th class="col-2">Section</th>
-                                    <th class="col-2">Actions</th>
+                                    <th class="col-1">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -91,7 +91,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $years[$section->name] }}</td>
                                         <td>BSIT - {{ $section->name }}{{ $section->description }}</td>
-                                        <td>
+                                        <td style="display: flex; justify-content: space-between; ">
                                             <!-- Link to show students in this section -->
                                             <a href="{{ route('sections.students', $section->id) }}" class="btn btn-success btn-sm">
                                                 Show Students

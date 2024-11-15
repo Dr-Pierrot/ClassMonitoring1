@@ -24,12 +24,12 @@
                         <h5 class="card-title">Choose Subjects</h5>
                         
                         <!-- Search Bar with Button -->
-                        <div class="input-group mb-3">
+                        <!-- <div class="input-group mb-3">
                             <input type="text" id="searchInput" class="form-control" placeholder="Search subjects by name...">
                             <button class="btn btn-outline-secondary" type="button" id="searchButton">
                                 <i class="bi bi-search"></i> Search
                             </button>
-                        </div>
+                        </div> -->
 
                         <!-- Import Button -->
                         <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addSubjectModal">
@@ -44,12 +44,11 @@
                             <table class="table table-bordered" style="width: 100%;" id="subjectsTable">
                                 <thead>
                                     <tr>
-                                        <th>Select</th>
-                                        <th>ID</th>
-                                        <th>Course Code</th>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Action</th>
+                                        <th class="col-1">Select</th>
+                                        <th class="col-1">ID</th>
+                                        <th class="col-2">Course Code</th>
+                                        <th class="col-3">Name</th>
+                                        <th class="col-1">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,8 +61,7 @@
                                             <td>{{ $subject->id }}</td>
                                             <td>{{ $subject->course_code }}</td>
                                             <td class="subject-name">{{ $subject->name }}</td>
-                                            <td>{{ $subject->description }}</td>
-                                            <td>
+                                            <td class="text-center">
                                                 <!-- Button to Trigger Modal -->
                                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteSubjectModal" data-id="{{ $subject->id }}">
                                                     Delete
@@ -125,10 +123,6 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Subject Name</label>
                             <input type="text" class="form-control" id="name" name="name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Subject Description</label>
-                            <input type="text" class="form-control" id="description" name="description">
                         </div>
                         <div class="row">
                             <div class="col-12 text-end">

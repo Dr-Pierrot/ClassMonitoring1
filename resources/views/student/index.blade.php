@@ -13,7 +13,6 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-            padding: 15px;
         }
 
         /* Table styles */
@@ -93,10 +92,13 @@
                 @endif
 
                 <div class="card">
+                <div class="card-header text-center">
+                            <h5 class="card-title">Students</h5>
+                        </div>
                     <div class="card-body">
-                        <h5 class="card-title">Students</h5>
 
                         <!-- Dropdown for exporting -->
+                         <br>
                         <div class="row">
                             <div class="col-6">
                                 <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createStudentModal">
@@ -144,7 +146,7 @@
                                     <th class="col-2">Date of Birth</th>
                                     <th class="col-1">Type</th>
                                     <th class="col-2">Section</th>
-                                    <th class="col-2">Action</th>
+                                    <th class="col-1">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -156,7 +158,7 @@
                                         <td>{{ $student->date_of_birth }}</td>
                                         <td> {{ ucfirst($student->student_type) }}</td>
                                         <td>BSIT - {{ $student->section->name }}{{ $student->section->description }}</td>
-                                        <td>
+                                        <td style="display: flex; justify-content: space-between; ">
                                             <button type="button" class="btn btn-sm btn-primary" onclick="showEditModal({{ $student }})">
                                                 Edit
                                             </button>
